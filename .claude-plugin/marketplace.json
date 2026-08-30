@@ -1,0 +1,7 @@
+{
+  "name": "whynot-skills",
+  "owner": { "name": "Лена · whynotailab.ru" },
+  "plugins": [
+    { "name": "montazh", "source": "./plugins/montazh" }
+  ]
+}
