@@ -26,7 +26,7 @@ description: "Собрать короткий вертикальный роли�
 ### 0. Проверить ffmpeg
 
 ```bash
-command -v ffmpeg || echo "нет ffmpeg — macOS: brew install ffmpeg · Windows: winget install Gyan.FFmpeg"
+command -v ffmpeg || bash "${CLAUDE_PLUGIN_ROOT}/skills/first-run-setup/bin/setup-ffmpeg.sh"
 ```
 
 ### 1. Контактные листы по всей съёмке
@@ -100,6 +100,7 @@ bash "${CLAUDE_PLUGIN_ROOT}/skills/video-reel-from-process/bin/strip.sh" рил�
 
 ## Чего не делать
 
-- Не публиковать самому — отдать файл, публикует человек.
+- Не публиковать самому **молча**. Ролик готов — предложи поставить его в очередь
+  навыком `video-to-socials`; он спросит подтверждение перед постановкой.
 - Не добавлять музыку без просьбы: у площадок свои правила, и чужой трек может стоить охвата.
 - Не «улучшать» цвет и не крутить скорость, пока не спросили. Сначала показать честную сборку.

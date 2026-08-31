@@ -1,7 +1,13 @@
 {
   "name": "whynot-skills",
-  "owner": { "name": "Лена · whynotailab.ru" },
+  "owner": {
+    "name": "Лена · whynotailab.ru"
+  },
   "plugins": [
-    { "name": "montazh", "source": "./plugins/montazh" }
-  ]
+    {
+      "name": "montazh",
+      "source": "./plugins/montazh"
+    }
+  ],
+  "description": "Навыки для вашего ИИ-агента: монтаж длинных записей в короткие вертикальные ролики и публикация готового в соцсети. Всё считается на вашем компьютере."
 }
