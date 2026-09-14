@@ -8,6 +8,7 @@
 # Запуск:  bash install-codex.sh                 — оба набора
 #          bash install-codex.sh --montazh        — только монтаж
 #          bash install-codex.sh --content        — только контент-цех
+#          bash install-codex.sh --zavod          — только контент-завод
 # Снести:  bash install-codex.sh --remove
 
 set -euo pipefail
@@ -20,13 +21,17 @@ MONTAZH_SKILLS=(first-run-setup video-clips-from-talk video-reel-from-process vi
 MONTAZH_AGENT="montazher"
 CONTENT_SKILLS=(themes-from-questions series-plan first-screen-brief on-screen-text decode-reference)
 CONTENT_AGENT="tsekh"
+ZAVOD_SKILLS=(zavod-setup zavod-flow reel-from-take panels-graphics)
+ZAVOD_AGENT="zavod"
 
-SKILLS=("${MONTAZH_SKILLS[@]}" "$MONTAZH_AGENT" "${CONTENT_SKILLS[@]}" "$CONTENT_AGENT")
+SKILLS=("${MONTAZH_SKILLS[@]}" "$MONTAZH_AGENT" "${CONTENT_SKILLS[@]}" "$CONTENT_AGENT"
+        "${ZAVOD_SKILLS[@]}" "$ZAVOD_AGENT")
 
-WANT_MONTAZH=1; WANT_CONTENT=1
+WANT_MONTAZH=1; WANT_CONTENT=1; WANT_ZAVOD=1
 case "${1:-}" in
-  --montazh) WANT_CONTENT=0 ;;
-  --content) WANT_MONTAZH=0 ;;
+  --montazh) WANT_CONTENT=0; WANT_ZAVOD=0 ;;
+  --content) WANT_MONTAZH=0; WANT_ZAVOD=0 ;;
+  --zavod)   WANT_MONTAZH=0; WANT_CONTENT=0 ;;
 esac
 
 say() { printf '%s\n' "$*"; }
@@ -97,6 +102,12 @@ if [ "$WANT_CONTENT" = 1 ]; then
   put_agent  content-tseh "$CONTENT_AGENT"
 fi
 
+if [ "$WANT_ZAVOD" = 1 ]; then
+  say " контент-завод:"
+  put_skills content-zavod "${ZAVOD_SKILLS[@]}"
+  put_agent  content-zavod "$ZAVOD_AGENT"
+fi
+
 # Пути к скриптам написаны под переменную Claude Code. В Codex её нет —
 # переписываю на его собственную. Структура папок совпадает, меняется только корень.
 FILES="$(grep -rl 'CLAUDE_PLUGIN_ROOT' "$DEST" 2>/dev/null || true)"
@@ -121,6 +132,13 @@ if [ "$WANT_MONTAZH" = 1 ]; then
   say "«нарежь роликов из этой записи», «собери рилс из этой съёмки»."
   say ""
 fi
+if [ "$WANT_ZAVOD" = 1 ]; then
+  say "    настрой завод"
+  say ""
+  say "Мастер доведёт до первого собранного ролика на вашем же файле. Дальше своими"
+  say "словами: «собери ролик из этой записи», «убери паузы», «поставь карточку»."
+  say ""
+fi
 if [ "$WANT_CONTENT" = 1 ]; then
   say "    о чём мне писать, вот комментарии под последним постом"
   say ""
@@ -133,5 +151,5 @@ say "  · В Codex есть свой навык transcribe от OpenAI. Если
 say "    монтажа, позовите нужный прямо: «нарежь роликов навыком video-clips-from-talk»."
 say "  · Контент-цех не пишет текст вместо вас — вашего голоса в наборе нет."
 say ""
-say "Поставить только одно: bash install-codex.sh --montazh  (или --content)"
+say "Поставить только одно: bash install-codex.sh --montazh | --content | --zavod"
 say "Убрать всё:            bash install-codex.sh --remove"
