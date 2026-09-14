@@ -63,6 +63,29 @@ curl -fsSL https://raw.githubusercontent.com/LenaWhynot/whynot-skills/main/insta
   «настрой монтажёра» или «нарежь роликов из записи» — он сам разберётся,
   есть в записи речь или нет.
 
+## Как обновиться
+
+Навыки дописываются: правится метод, добавляются инструменты. У вас лежит тот срез,
+который был на момент установки, — обновление приходит только по вашей команде.
+
+**В приложении:** Customize → Plugins → Update у плагина «Агент по монтажу».
+
+**В терминале** — две команды, сначала обновляется список, потом сам плагин:
+
+```
+claude plugin marketplace update whynot-skills
+claude plugin update montazh@whynot-skills
+```
+
+После второй перезапустите Claude Code — иначе старая версия останется в уже
+открытых сессиях. Проверить, что приехало: `claude plugin list`.
+
+**В Codex** — запустите установщик снова, он перезапишет навыки:
+
+```
+curl -fsSL https://raw.githubusercontent.com/LenaWhynot/whynot-skills/main/install-codex.sh -o install-codex.sh && bash install-codex.sh
+```
+
 ## Как пользоваться
 
 Никаких команд. Скажите агенту своими словами:
