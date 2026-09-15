@@ -6,9 +6,8 @@
 # заодно переписывая пути под переменные Codex.
 #
 # Запуск:  bash install-codex.sh                 — оба набора
-#          bash install-codex.sh --montazh        — только монтаж
-#          bash install-codex.sh --content        — только контент-цех
-#          bash install-codex.sh --zavod          — только контент-завод
+#          bash install-codex.sh --video          — только видео
+#          bash install-codex.sh --temy           — только «о чём снимать»
 # Снести:  bash install-codex.sh --remove
 
 set -euo pipefail
@@ -17,21 +16,19 @@ CODEX_HOME="${CODEX_HOME:-$HOME/.codex}"
 DEST="$CODEX_HOME/skills"
 
 # набор → навыки плагина + его агент, который в Codex становится навыком-распределителем
-MONTAZH_SKILLS=(first-run-setup video-clips-from-talk video-reel-from-process video-to-socials)
+MONTAZH_SKILLS=(first-run-setup video-flow video-clips-from-talk reel-from-take
+                video-reel-from-process panels-graphics broll-library motion-remotion
+                video-to-socials)
 MONTAZH_AGENT="montazher"
 CONTENT_SKILLS=(themes-from-questions series-plan first-screen-brief on-screen-text decode-reference)
 CONTENT_AGENT="tsekh"
-ZAVOD_SKILLS=(zavod-setup zavod-flow reel-from-take panels-graphics)
-ZAVOD_AGENT="zavod"
-
 SKILLS=("${MONTAZH_SKILLS[@]}" "$MONTAZH_AGENT" "${CONTENT_SKILLS[@]}" "$CONTENT_AGENT"
-        "${ZAVOD_SKILLS[@]}" "$ZAVOD_AGENT")
+        zavod-setup zavod-flow)   # имена из прежней раскладки — чтобы --remove их тоже убрал
 
-WANT_MONTAZH=1; WANT_CONTENT=1; WANT_ZAVOD=1
+WANT_MONTAZH=1; WANT_CONTENT=1
 case "${1:-}" in
-  --montazh) WANT_CONTENT=0; WANT_ZAVOD=0 ;;
-  --content) WANT_MONTAZH=0; WANT_ZAVOD=0 ;;
-  --zavod)   WANT_MONTAZH=0; WANT_CONTENT=0 ;;
+  --video|--montazh) WANT_CONTENT=0 ;;
+  --temy|--content)  WANT_MONTAZH=0 ;;
 esac
 
 say() { printf '%s\n' "$*"; }
@@ -91,7 +88,7 @@ put_agent() {            # put_agent <папка плагина> <имя аге�
 }
 
 if [ "$WANT_MONTAZH" = 1 ]; then
-  say " монтаж:"
+  say " видео:"
   put_skills montazh "${MONTAZH_SKILLS[@]}"
   put_agent  montazh "$MONTAZH_AGENT"
 fi
@@ -100,12 +97,6 @@ if [ "$WANT_CONTENT" = 1 ]; then
   say " контент-цех:"
   put_skills content-tseh "${CONTENT_SKILLS[@]}"
   put_agent  content-tseh "$CONTENT_AGENT"
-fi
-
-if [ "$WANT_ZAVOD" = 1 ]; then
-  say " контент-завод:"
-  put_skills content-zavod "${ZAVOD_SKILLS[@]}"
-  put_agent  content-zavod "$ZAVOD_AGENT"
 fi
 
 # Пути к скриптам написаны под переменную Claude Code. В Codex её нет —
@@ -125,18 +116,11 @@ say ""
 say "Готово. Теперь откройте НОВУЮ сессию Codex и скажите своими словами:"
 say ""
 if [ "$WANT_MONTAZH" = 1 ]; then
-  say "    настрой монтажёра"
+  say "    настрой монтаж"
   say ""
   say "Мастер настройки сам скачает ffmpeg — без Homebrew и без пароля администратора,"
   say "заведёт папки и прогонит весь путь на вашем же файле. Дальше говорите как хочется:"
   say "«нарежь роликов из этой записи», «собери рилс из этой съёмки»."
-  say ""
-fi
-if [ "$WANT_ZAVOD" = 1 ]; then
-  say "    настрой завод"
-  say ""
-  say "Мастер доведёт до первого собранного ролика на вашем же файле. Дальше своими"
-  say "словами: «собери ролик из этой записи», «убери паузы», «поставь карточку»."
   say ""
 fi
 if [ "$WANT_CONTENT" = 1 ]; then
@@ -151,5 +135,5 @@ say "  · В Codex есть свой навык transcribe от OpenAI. Если
 say "    монтажа, позовите нужный прямо: «нарежь роликов навыком video-clips-from-talk»."
 say "  · Контент-цех не пишет текст вместо вас — вашего голоса в наборе нет."
 say ""
-say "Поставить только одно: bash install-codex.sh --montazh | --content | --zavod"
+say "Поставить только одно: bash install-codex.sh --video | --temy"
 say "Убрать всё:            bash install-codex.sh --remove"

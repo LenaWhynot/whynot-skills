@@ -1,0 +1,19 @@
+{
+  "fps": 30,
+  "duration": 6.0,
+  "durationInFrames": 180,
+  "chunks": [
+    {"text": "Это демо-раскадровка", "start": 0.2, "end": 1.6,
+     "words": [{"text": "Это", "start": 0.2, "end": 0.5},
+               {"text": "демо-раскадровка", "start": 0.5, "end": 1.6}]},
+    {"text": "замените её своей", "start": 1.8, "end": 3.2,
+     "words": [{"text": "замените", "start": 1.8, "end": 2.4},
+               {"text": "её", "start": 2.4, "end": 2.6},
+               {"text": "своей", "start": 2.6, "end": 3.2}]},
+    {"text": "и поставьте 3 карточки", "start": 3.4, "end": 5.6, "num": true, "hl": "lime",
+     "words": [{"text": "и", "start": 3.4, "end": 3.5},
+               {"text": "поставьте", "start": 3.5, "end": 4.2},
+               {"text": "3", "start": 4.2, "end": 4.5},
+               {"text": "карточки", "start": 4.5, "end": 5.6}]}
+  ]
+}

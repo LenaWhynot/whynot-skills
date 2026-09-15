@@ -31,7 +31,7 @@ plan.json · spec.json  что собираем (форматы ниже)
 ```bash
 S="${CLAUDE_PLUGIN_ROOT}/skills/reel-from-take"
 export ZAVOD_WORK="$PWD"            # папка заказа
-command -v ffmpeg >/dev/null || bash "${CLAUDE_PLUGIN_ROOT}/skills/zavod-setup/bin/setup-ffmpeg.sh"
+command -v ffmpeg >/dev/null || bash "${CLAUDE_PLUGIN_ROOT}/skills/first-run-setup/bin/setup-ffmpeg.sh"
 ```
 
 **1. Опись и дорожки.**

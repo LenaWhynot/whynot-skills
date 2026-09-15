@@ -1,0 +1,17 @@
+{
+  "_": "Один такт = одна произнесённая фраза. start/end — секунды. Пример-рыба, заменить своими.",
+  "beats": [
+    { "start": 0.0,  "end": 3.2,  "mode": "fullhim", "punch": true,
+      "card": { "type": "takeover", "word": "ЧЕТЫРЕ ЧАСА", "tone": "red" } },
+    { "start": 3.2,  "end": 8.4,  "mode": "split",
+      "card": { "type": "countup", "from": 240, "to": 40, "suffix": " мин", "label": "стало на ролик", "tone": "lime" } },
+    { "start": 8.4,  "end": 14.0, "mode": "split",
+      "card": { "type": "list", "items": ["нужен монтажёр", "нужен After Effects", "нужен год практики"], "answer": "нужен транскрипт" } },
+    { "start": 14.0, "end": 19.0, "mode": "solo",
+      "card": { "type": "beforeafter", "before": "говорящая голова", "after": "карточка на каждую фразу" } },
+    { "start": 19.0, "end": 23.0, "mode": "fullhim",
+      "card": { "type": "stamp", "text": "«соберу в выходные»", "stamp": "НЕТ", "sub": "так это не работает" } },
+    { "start": 23.0, "end": 27.0, "mode": "full",
+      "card": { "type": "cta", "title": "что дальше", "line": "Разбираю это на практикуме", "button": "ссылка в шапке" } }
+  ]
+}
