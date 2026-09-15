@@ -18,9 +18,11 @@ DEST="$CODEX_HOME/skills"
 
 # набор → навыки плагина + его агент, который в Codex становится навыком-распределителем
 MONTAZH_SKILLS=(first-run-setup video-flow video-clips-from-talk reel-from-take
-                panels-graphics broll-library motion-remotion video-to-socials)
+                panels-graphics broll-library motion-remotion longform-video
+                video-to-socials)
 MONTAZH_AGENT="montazher"
-CONTENT_SKILLS=(themes-from-questions series-plan first-screen-brief on-screen-text decode-reference)
+CONTENT_SKILLS=(trend-scan themes-from-questions series-plan first-screen-brief
+                on-screen-text decode-reference)
 CONTENT_AGENT="tsekh"
 PROCESS_SKILLS=(process-reel-cut)
 
