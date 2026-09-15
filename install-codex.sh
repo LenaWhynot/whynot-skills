@@ -7,6 +7,7 @@
 #
 # Запуск:  bash install-codex.sh                 — оба набора
 #          bash install-codex.sh --video          — только видео
+#          bash install-codex.sh --process        — только съёмка процесса
 #          bash install-codex.sh --temy           — только «о чём снимать»
 # Снести:  bash install-codex.sh --remove
 
@@ -17,18 +18,21 @@ DEST="$CODEX_HOME/skills"
 
 # набор → навыки плагина + его агент, который в Codex становится навыком-распределителем
 MONTAZH_SKILLS=(first-run-setup video-flow video-clips-from-talk reel-from-take
-                video-reel-from-process panels-graphics broll-library motion-remotion
-                video-to-socials)
+                panels-graphics broll-library motion-remotion video-to-socials)
 MONTAZH_AGENT="montazher"
 CONTENT_SKILLS=(themes-from-questions series-plan first-screen-brief on-screen-text decode-reference)
 CONTENT_AGENT="tsekh"
-SKILLS=("${MONTAZH_SKILLS[@]}" "$MONTAZH_AGENT" "${CONTENT_SKILLS[@]}" "$CONTENT_AGENT"
-        zavod-setup zavod-flow)   # имена из прежней раскладки — чтобы --remove их тоже убрал
+PROCESS_SKILLS=(process-reel-cut)
 
-WANT_MONTAZH=1; WANT_CONTENT=1
+SKILLS=("${MONTAZH_SKILLS[@]}" "$MONTAZH_AGENT" "${CONTENT_SKILLS[@]}" "$CONTENT_AGENT"
+        "${PROCESS_SKILLS[@]}"
+        zavod-setup zavod-flow video-reel-from-process)   # прежние имена — чтобы --remove убрал и их
+
+WANT_MONTAZH=1; WANT_CONTENT=1; WANT_PROCESS=1
 case "${1:-}" in
-  --video|--montazh) WANT_CONTENT=0 ;;
-  --temy|--content)  WANT_MONTAZH=0 ;;
+  --video|--montazh) WANT_CONTENT=0; WANT_PROCESS=0 ;;
+  --temy|--content)  WANT_MONTAZH=0; WANT_PROCESS=0 ;;
+  --process)         WANT_MONTAZH=0; WANT_CONTENT=0 ;;
 esac
 
 say() { printf '%s\n' "$*"; }
@@ -93,8 +97,13 @@ if [ "$WANT_MONTAZH" = 1 ]; then
   put_agent  montazh "$MONTAZH_AGENT"
 fi
 
+if [ "$WANT_PROCESS" = 1 ]; then
+  say " съёмка процесса:"
+  put_skills process-reel "${PROCESS_SKILLS[@]}"
+fi
+
 if [ "$WANT_CONTENT" = 1 ]; then
-  say " контент-цех:"
+  say " о чём снимать:"
   put_skills content-tseh "${CONTENT_SKILLS[@]}"
   put_agent  content-tseh "$CONTENT_AGENT"
 fi
@@ -135,5 +144,5 @@ say "  · В Codex есть свой навык transcribe от OpenAI. Если
 say "    монтажа, позовите нужный прямо: «нарежь роликов навыком video-clips-from-talk»."
 say "  · Контент-цех не пишет текст вместо вас — вашего голоса в наборе нет."
 say ""
-say "Поставить только одно: bash install-codex.sh --video | --temy"
+say "Поставить только одно: bash install-codex.sh --video | --process | --temy"
 say "Убрать всё:            bash install-codex.sh --remove"
